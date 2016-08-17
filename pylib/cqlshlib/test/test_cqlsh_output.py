@@ -29,6 +29,7 @@ from .ansi_colors import (ColoredText, lookup_colorcode, lookup_colorname,
                           lookup_colorletter, ansi_seq)
 import unittest
 import sys
+from tools import known_failure
 
 CONTROL_C = '\x03'
 CONTROL_D = '\x04'
@@ -551,6 +552,9 @@ class TestCqlshOutput(BaseTestCase):
             self.assertColorFromTags(midline,
                              "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
 
+@known_failure(failure_source='test',
+                   jira_url='https://issues.apache.org/jira/browse/CASSANDRA-12481',
+                   flaky=True)
     def test_describe_keyspace_output(self):
         with testrun_cqlsh(tty=True) as c:
             ks = get_keyspace()
